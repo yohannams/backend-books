@@ -1,0 +1,23 @@
+GET http://localhost:5000/categories
+
+###
+GET http://localhost:5000/categories/1
+
+###
+POST http://localhost:5000/categories
+Content-Type: application/json
+
+{
+    "name": "novel"
+}
+
+###
+PATCH http://localhost:5000/categories/1
+Content-Type: application/json
+
+{
+    "name": "comic"
+}
+
+###
+DELETE http://localhost:5000/categories/2
