@@ -1,3 +1,4 @@
+import Book from "../models/BookModel.js";
 import Category from "../models/CategoryModel.js";
 
 export const getCategories = async (req, res) => {
@@ -52,6 +53,19 @@ export const deleteCategory = async (req, res) => {
       },
     });
     res.status(200).json({ msg: "Category Deleted" });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getBooksByCategory = async (req, res) => {
+  try {
+    const response = await Book.findAll({
+      where: {
+        category_id: req.params.categoryId,
+      },
+    });
+    res.status(200).json(response);
   } catch (error) {
     console.log(error.message);
   }
