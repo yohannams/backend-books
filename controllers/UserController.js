@@ -1,20 +1,26 @@
 import User from "../models/UserModel.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import cookie from "cookie";
 
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-
     const user = await User.findOne({ where: { username } });
 
     if (user) {
-      const passwordMatch = await compare(password, user.password);
-      //   const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (passwordMatch) {
-        res.status(200).json({ msg: "Login successful" });
+        const token = jwt.sign({ username: user.username }, "your-secret-key");
+
+        res.status(200).json({ msg: "Login successful", token });
+        return token;
       } else {
         res.status(401).json({ msg: "Invalid credentials" });
       }
+    } else {
+      res.status(404).json({ msg: "User not found" });
     }
   } catch (error) {
     console.log(error.message);

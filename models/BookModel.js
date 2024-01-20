@@ -10,7 +10,11 @@ const Book = db.define(
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     image_url: DataTypes.STRING,
-    release_year: DataTypes.INTEGER,
+    release_year: {
+      type: DataTypes.INTEGER,
+      min: 1980,
+      max: 2021,
+    },
     price: DataTypes.STRING,
     total_page: DataTypes.INTEGER,
     thickness: DataTypes.STRING,
