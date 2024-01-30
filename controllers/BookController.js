@@ -24,10 +24,13 @@ export const getBookById = async (req, res) => {
 
 export const createBook = async (req, res) => {
   try {
-    await Book.create(req.body);
-    res.status(201).json({ msg: "Book Created" });
+    const newBook = await Book.create(req.body);
+    res.status(201).json({ msg: "Book Created", book: newBook });
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
+    res
+      .status(500)
+      .json({ msg: "Internal Server Error", error: error.message });
   }
 };
 

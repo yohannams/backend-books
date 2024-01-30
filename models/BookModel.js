@@ -7,6 +7,11 @@ const { DataTypes } = Sequelize;
 const Book = db.define(
   "book",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     image_url: DataTypes.STRING,
