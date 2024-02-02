@@ -1,4 +1,5 @@
 import Book from "../models/BookModel.js";
+import Category from "../models/CategoryModel.js";
 
 export const getBooks = async (req, res) => {
   try {
@@ -23,9 +24,10 @@ export const getBookById = async (req, res) => {
 };
 
 export const createBook = async (req, res) => {
+  console.log(req);
   try {
-    const newBook = await Book.create(req.body);
-    res.status(201).json({ msg: "Book Created", book: newBook });
+    await Book.create(req.body);
+    res.status(201).json({ msg: "Book Created" });
   } catch (error) {
     console.error(error.message);
     res
@@ -58,4 +60,16 @@ export const deleteBook = async (req, res) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const getBookCategory = async (req, res) => {
+  const data = await Book.findAll({
+    include: [
+      {
+        model: Category,
+        as: "category",
+      },
+    ],
+    where: { id: req.params.id },
+  });
 };

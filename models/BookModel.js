@@ -35,7 +35,16 @@ const Book = db.define(
       allowNull: false,
       field: "updated_at",
     },
-    category_id: DataTypes.INTEGER,
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Category,
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "NO ACTION",
+    },
   },
   {
     freezeTableName: true,
@@ -43,10 +52,19 @@ const Book = db.define(
   }
 );
 
-Book.belongsTo(Category, { foreignKey: "category_id" });
+Book.hasMany(Category, {
+  foreignKey: "id",
+  as: "category",
+  onDelete: "NO ACTION",
+  onUpdate: "CASCADE",
+});
+
+Category.belongsTo(Book, { foreignKey: "id", as: "book" });
 
 export default Book;
 
 (async () => {
   await db.sync();
+  await Category.sync();
+  await Book.sync({ alter: true });
 })();

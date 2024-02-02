@@ -6,6 +6,12 @@ const { DataTypes } = Sequelize;
 const Category = db.define(
   "category",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      foreignKey: true,
+    },
     name: DataTypes.STRING,
     created_at: {
       type: DataTypes.DATE,
