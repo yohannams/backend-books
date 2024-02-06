@@ -10,7 +10,6 @@ const Category = db.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      foreignKey: true,
     },
     name: DataTypes.STRING,
     created_at: {

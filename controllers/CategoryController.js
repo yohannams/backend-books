@@ -62,7 +62,7 @@ export const getBooksByCategory = async (req, res) => {
   try {
     const response = await Book.findAll({
       where: {
-        category_id: req.params.categoryId,
+        category_id: req.params.category_id,
       },
     });
     res.status(200).json(response);

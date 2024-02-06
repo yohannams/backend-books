@@ -3,10 +3,15 @@ import Category from "../models/CategoryModel.js";
 
 export const getBooks = async (req, res) => {
   try {
-    const response = await Book.findAll();
-    res.status(200).json(response);
+    const books = await Book.findAll({
+      include: {
+        model: Category,
+        as: "category",
+      },
+    });
+    res.status(200).json(books);
   } catch (error) {
-    console.log(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 

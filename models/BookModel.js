@@ -38,12 +38,15 @@ const Book = db.define(
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "category_id cannot be null",
+        },
+      },
       references: {
         model: Category,
         key: "id",
       },
-      onUpdate: "CASCADE",
-      onDelete: "NO ACTION",
     },
   },
   {
@@ -52,14 +55,10 @@ const Book = db.define(
   }
 );
 
-Book.hasMany(Category, {
-  foreignKey: "id",
+Book.belongsTo(Category, {
+  foreignKey: "category_id",
   as: "category",
-  onDelete: "NO ACTION",
-  onUpdate: "CASCADE",
 });
-
-Category.belongsTo(Book, { foreignKey: "id", as: "book" });
 
 export default Book;
 
